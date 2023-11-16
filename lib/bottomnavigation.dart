@@ -19,6 +19,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final _pages = const [
     homeScreen(),
     historyScreen(),
+    addScreen(),
     noteScreen(),
     settingScreen(),
   ];
