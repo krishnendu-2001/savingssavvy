@@ -33,6 +33,8 @@ dependencies:
   fl_chart: ^0.64.0
   flutter:
     sdk: flutter
+  flutter_slidable: ^3.0.1
+  google_fonts: ^6.1.0
    
   
 
