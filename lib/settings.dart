@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/settings/about.dart';
-import 'package:flutter_application_1/settings/reset.dart';
-import 'package:flutter_application_1/settings/terms&condition.dart';
 
 class settings extends StatelessWidget {
   const settings({super.key});
