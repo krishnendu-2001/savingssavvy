@@ -1,10 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/addPage.dart';
-import 'package:flutter_application_1/home.dart';
-import 'package:flutter_application_1/notes.dart';
-import 'package:flutter_application_1/settings.dart';
-import 'package:flutter_application_1/transaction%20history/history_transaction.dart';
+import 'package:flutter_application_1/screens/addpage.dart';
+
+import 'package:flutter_application_1/screens/home.dart';
+import 'package:flutter_application_1/screens/notes.dart';
+import 'package:flutter_application_1/screens/settings.dart';
+import 'package:flutter_application_1/screens/transaction%20history/history_transaction.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -15,11 +16,11 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _bottomNavIndex = 0;
-  final _pages = const [
-    homeScreen(),
-    historyScreen(),
-    noteScreen(),
-    settings(),
+  final _pages = [
+    HomeScreen(),
+    TransactionHistory(), // Use HistoryScreen instead of HistoryScreenState
+    NoteScreen(),
+    Settings(),
   ];
 
   @override
@@ -27,18 +28,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       body: _pages[_bottomNavIndex],
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 255, 162, 22),
+        backgroundColor: Colors.white,
         shape: CircleBorder(),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => addScreen(),
+            builder: (context) => (_bottomNavIndex == 0 ||
+                    _bottomNavIndex == 1 ||
+                    _bottomNavIndex == 2)
+                ? AddScreen()
+                : NoteScreen(),
           ));
         },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(255, 109, 194, 185),
         icons: [
           Icons.home,
           Icons.history,
@@ -46,6 +51,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
           Icons.settings,
         ],
         activeIndex: _bottomNavIndex,
+
+        ///
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 32,
@@ -55,7 +62,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             _bottomNavIndex = index;
           });
         },
-        activeColor: Color.fromARGB(255, 255, 162, 22),
+        activeColor: Colors.white,
         inactiveColor: Colors.white,
       ),
     );

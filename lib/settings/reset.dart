@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class reset extends StatelessWidget {
-  const reset({super.key});
+class Reset extends StatelessWidget {
+  const Reset({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Reset();
   }
 }
