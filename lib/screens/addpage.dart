@@ -15,6 +15,8 @@ class _AddScreenState extends State<AddScreen> {
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
+  String? selectedType;
+  List<String> item = ['income', 'expense'];
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,7 @@ class _AddScreenState extends State<AddScreen> {
             color: Color.fromARGB(108, 243, 235, 211),
             child: Column(
               children: [
-                TextFormField(
-                  controller: _typeController,
-                  decoration: InputDecoration(
-                    labelText: 'Type',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
+                type(),
                 SizedBox(
                   height: 20,
                 ),
@@ -81,8 +77,60 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
+  Padding type() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(width: 2, color: Colors.black54),
+        ),
+        child: DropdownButton<String>(
+          value: selectedType,
+          onChanged: ((value) {
+            setState(() {
+              selectedType = value!;
+            });
+          }),
+          items: item
+              .map((e) => DropdownMenuItem(
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Text(
+                            e,
+                            style: const TextStyle(fontSize: 17),
+                          )
+                        ],
+                      ),
+                    ),
+                    value: e,
+                  ))
+              .toList(),
+          selectedItemBuilder: (BuildContext context) => item
+              .map((e) => Row(
+                    children: [
+                      Text(e),
+                    ],
+                  ))
+              .toList(),
+          hint: const Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: Text(
+              "type",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          dropdownColor: Colors.white,
+          isExpanded: true,
+        ),
+      ),
+    );
+  }
+
   Future<void> onAddButtonClick() async {
-    final typee = _typeController.text.trim();
+    final typee = selectedType!;
     final amountt = _amountController.text.trim();
     final descriptionn = _descriptionController.text.trim();
     final date = _dateController.text.trim();
