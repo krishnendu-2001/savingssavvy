@@ -1,21 +1,5 @@
-// enum CategoryType {
-//   income,
-//   expense,
-// }
-
-// class CategoryModel {
-//   final String name;
-//   final bool isDeleted;
-//   final CategoryType type;
-
-//   CategoryModel({
-//     required this.name,
-//     required this.type,
-//     this.isDeleted = false,
-//   });
-// }
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/db/model/data_model.dart';
+import 'package:flutter_application_1/db/model/money/money_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 ValueNotifier<List<moneymodel>> moneyListNotifier = ValueNotifier([]);
@@ -32,4 +16,17 @@ Future<void> getAllMoney() async {
   moneyListNotifier.value.clear();
   moneyListNotifier.value.addAll(moneyDB.values);
   moneyListNotifier.notifyListeners();
+}
+
+Future<void> delet(int index) async {
+  final Moneydb = await Hive.openBox<moneymodel>('money_db');
+  await Moneydb.deleteAt(index);
+  getAllMoney();
+}
+
+Future<void> editMoney(moneymodel value) async {
+  final moneyDB = await Hive.openBox<moneymodel>('money_db');
+  moneyDB.put(value.id, value);
+  moneyListNotifier.notifyListeners();
+  getAllMoney();
 }

@@ -1,41 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'data_model.dart';
+part of 'note_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class moneymodelAdapter extends TypeAdapter<moneymodel> {
+class notemodelAdapter extends TypeAdapter<notemodel> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  moneymodel read(BinaryReader reader) {
+  notemodel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return moneymodel(
-      type: fields[0] as String,
-      amount: fields[1] as String,
-      description: fields[2] as String,
-      time: fields[3] as DateTime,
+    return notemodel(
+      note: fields[0] as String,
+      date: fields[0] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, moneymodel obj) {
+  void write(BinaryWriter writer, notemodel obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.type)
       ..writeByte(1)
-      ..write(obj.amount)
-      ..writeByte(2)
-      ..write(obj.description)
-      ..writeByte(3)
-      ..write(obj.time);
+      ..writeByte(0)
+      ..write(obj.note);
   }
 
   @override
@@ -44,7 +36,7 @@ class moneymodelAdapter extends TypeAdapter<moneymodel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is moneymodelAdapter &&
+      other is notemodelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

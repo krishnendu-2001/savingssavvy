@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/db/function.dart';
-import 'package:flutter_application_1/db/model/data_model.dart';
-import 'package:flutter_application_1/screens/transaction%20history/history_transaction.dart';
+import 'package:flutter_application_1/db/money_function.dart';
+import 'package:flutter_application_1/db/model/money/money_model.dart';
+import 'package:flutter_application_1/screens/transaction_screen/history_transaction.dart';
+import 'package:flutter_application_1/widget/bottombar.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  final _typeController = TextEditingController();
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
@@ -24,11 +24,14 @@ class _AddScreenState extends State<AddScreen> {
       child: Scaffold(
         body: Center(
           child: Container(
-            height: 600,
+            height: MediaQuery.of(context).size.height,
             width: 350,
             color: Color.fromARGB(108, 243, 235, 211),
             child: Column(
               children: [
+                SizedBox(
+                  height: 30,
+                ),
                 type(),
                 SizedBox(
                   height: 20,
@@ -143,6 +146,7 @@ class _AddScreenState extends State<AddScreen> {
         amount: amountt,
         description: descriptionn,
         time: DateTime.now(),
+        typee: null,
       );
       AddAmount(money);
 
@@ -151,7 +155,7 @@ class _AddScreenState extends State<AddScreen> {
       // Navigator to HistoryScreen
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => TransactionHistory(),
+          builder: (context) => BottomNavigation(),
         ),
       );
     }

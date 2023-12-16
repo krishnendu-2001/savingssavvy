@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-part 'data_model.g.dart';
+part 'money_model.g.dart';
 
 @HiveType(typeId: 0)
 class moneymodel {
@@ -19,5 +19,8 @@ class moneymodel {
       {required this.type,
       required this.amount,
       required this.description,
-      required this.time});
+      required this.time,
+      required typee});
+
+  get id => null;
 }

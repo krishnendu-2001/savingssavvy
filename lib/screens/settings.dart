@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/settings/about.dart';
+import 'package:flutter_application_1/screens/settings/about.dart';
 
-import 'package:flutter_application_1/settings/reset.dart';
-import 'package:flutter_application_1/settings/terms_condition.dart';
+import 'package:flutter_application_1/screens/settings/reset.dart';
+import 'package:flutter_application_1/screens/settings/terms_condition.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -66,7 +66,7 @@ class Settings extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Reset();
+                    resetDB(context);
                   },
                   child: ListTile(
                     title: Text(

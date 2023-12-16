@@ -1,11 +1,12 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/addpage.dart';
+import 'package:flutter_application_1/screens/selected_screen/selectedpage.dart';
 
-import 'package:flutter_application_1/screens/home.dart';
-import 'package:flutter_application_1/screens/notes.dart';
+import 'package:flutter_application_1/screens/home_screen/home.dart';
+import 'package:flutter_application_1/screens/notes_screen/noteadd.dart';
+import 'package:flutter_application_1/screens/notes_screen/notes.dart';
 import 'package:flutter_application_1/screens/settings.dart';
-import 'package:flutter_application_1/screens/transaction%20history/history_transaction.dart';
+import 'package:flutter_application_1/screens/transaction_screen/history_transaction.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     _bottomNavIndex == 1 ||
                     _bottomNavIndex == 2)
                 ? AddScreen()
-                : NoteScreen(),
+                : NotesAdd(),
           ));
         },
         child: const Icon(Icons.add),
