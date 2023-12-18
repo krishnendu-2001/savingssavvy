@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/db/money_function.dart';
+import 'package:flutter_application_1/functions/money_function.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
 import 'package:flutter_application_1/widget/edit.dart';
 import 'package:flutter_application_1/screens/transaction_screen/popup/option2.dart';
-import 'package:flutter_application_1/screens/transaction_screen/popup/option3.dart';
 import 'package:flutter_application_1/screens/transaction_screen/popup/options.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -15,6 +14,7 @@ class TransactionHistory extends StatefulWidget {
 }
 
 class _TransactionHistoryState extends State<TransactionHistory> {
+  String searchQuery = '';
   @override
   Widget build(BuildContext context) {
     getAllMoney();
@@ -31,24 +31,42 @@ class _TransactionHistoryState extends State<TransactionHistory> {
           ),
         ),
         actions: [
+          Container(
+              width: 160,
+              height: 35,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 236, 238, 240),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: "search",
+                      border: InputBorder.none,
+                    ),
+                  )),
+                  Icon(Icons.search)
+                ],
+              )),
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'option1') {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => optionScreen(history: optionScreen),
+                    builder: (context) => IncomeScreen(history: IncomeScreen),
                   ),
                 );
               } else if (value == 'option2') {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => option2Screen(history: option2Screen),
-                  ),
-                );
-              } else if (value == 'option3') {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => option3Screen(history: option3Screen),
+                    builder: (context) => ExpenceScreen(history: ExpenceScreen),
                   ),
                 );
               }
@@ -62,10 +80,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 value: 'option2',
                 child: Text('Expense'),
               ),
-              const PopupMenuItem<String>(
-                value: 'option3',
-                child: Text('All'),
-              ),
             ],
           ),
         ],
@@ -74,10 +88,15 @@ class _TransactionHistoryState extends State<TransactionHistory> {
         valueListenable: moneyListNotifier,
         builder:
             (BuildContext ctx, List<moneymodel> walletList, Widget? child) {
+          List<moneymodel> filteredList = walletList.where((data) {
+            return data.description
+                .toLowerCase()
+                .contains(searchQuery.toLowerCase());
+          }).toList();
           return ListView.builder(
-            itemCount: walletList.length,
+            itemCount: filteredList.length,
             itemBuilder: (BuildContext ctx, int index) {
-              final data = walletList[index];
+              final data = filteredList[index];
               return Slidable(
                 endActionPane: ActionPane(
                   motion: StretchMotion(),

@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/db/money_function.dart';
+import 'package:flutter_application_1/functions/money_function.dart';
+
 import 'package:flutter_application_1/db/model/money/money_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,149 +16,129 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    // Get the list of transactions
+    List<moneymodel> walletList = moneyListNotifier.value;
+
+    // Calculate total income and total expense
+    double totalIncome = 0.0;
+    double totalExpense = 0.0;
+
+    walletList.forEach((transaction) {
+      if (transaction.type == 'income') {
+        totalIncome += double.parse(transaction.amount);
+      } else if (transaction.type == 'expense') {
+        totalExpense += double.parse(transaction.amount);
+      }
+    });
+
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(children: [
-          ListTile(
-            title: Text(
-              'Hey! Krishnendu',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(
-            height: 0,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Container(
-              height: 300,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 220,
-                    left: 170,
-                    child: Text('₹100000'),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Title(
-                      color: Colors.black,
-                      child: Text(
-                        'Your total balance',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  PieChart(
-                    swapAnimationDuration: Duration(milliseconds: 0),
-                    swapAnimationCurve: Curves.bounceIn,
-                    PieChartData(sections: [
-                      PieChartSectionData(
-                        value: 200,
-                        title: "Income",
-                        color: Color.fromRGBO(118, 150, 129, 1),
-                      ),
-                      PieChartSectionData(
-                        value: 350,
-                        title: "Expenses",
-                        color: Color.fromRGBO(224, 123, 155, 1),
-                      ),
-                    ]),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Row(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: 25,
-                  width: 25,
-                  color: Color.fromRGBO(118, 150, 129, 1),
+              ListTile(
+                title: Text(
+                  'Hey! Krishnendu',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              Text("Income")
-            ],
-          ),
-          SizedBox(height: 5),
-          Row(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
+              SizedBox(height: 0),
+              Padding(
+                padding: const EdgeInsets.all(10),
                 child: Container(
-                  height: 25,
-                  width: 25,
-                  color: Color.fromRGBO(224, 123, 155, 1),
-                ),
-              ),
-              Text("Expense")
-            ],
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Container(
-            height: 30,
-            width: 100,
-            color: Colors.white,
-            child: Text('Recent',
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
-          ),
-          Divider(),
-          Container(
-            height: 300,
-            width: 500,
-            child: ValueListenableBuilder(
-              valueListenable: moneyListNotifier,
-              builder: (BuildContext ctx, List<moneymodel> walletList,
-                  Widget? child) {
-                return ListView.builder(
-                  itemCount: walletList.length > 5 ? 5 : walletList.length,
-                  itemBuilder: (BuildContext ctx, int index) {
-                    final data = walletList[index];
-                    return ListTile(
-                      title: Text(data.description),
-                      subtitle: Text(
-                        '${data.time.year}-${data.time.day}-${data.time.month}',
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            data.amount,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: data.type == 'Income'
-                                  ? Colors.green[400]
-                                  : Color.fromARGB(255, 15, 65, 202),
+                  height: 300,
+                  child: Stack(
+                    children: [
+                      PieChart(
+                        swapAnimationDuration: Duration(milliseconds: 0),
+                        swapAnimationCurve: Curves.bounceIn,
+                        PieChartData(
+                          sections: [
+                            PieChartSectionData(
+                              value: totalIncome,
+                              title: "Income",
+                              color: Color.fromRGBO(118, 150, 129, 1),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          const SizedBox(width: 2),
-                        ],
+                            PieChartSectionData(
+                              value: totalExpense,
+                              title: "Expenses",
+                              color: Color.fromRGBO(224, 123, 155, 1),
+                            ),
+                          ],
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20), // Adjust spacing as needed
+              Text(
+                'Total Income: ${totalIncome.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18, color: Colors.green[400]),
+              ),
+              Text(
+                'Total Expense: ${totalExpense.toStringAsFixed(2)}',
+                style: TextStyle(
+                    fontSize: 18, color: Color.fromRGBO(202, 15, 15, 1)),
+              ),
+              SizedBox(height: 20), // Adjust spacing as needed
+              Container(
+                height: 30,
+                width: 100,
+                color: Colors.white,
+                child: Text(
+                  'Recent',
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+                ),
+              ),
+              Divider(),
+              Container(
+                height: 300,
+                width: 500,
+                child: ValueListenableBuilder(
+                  valueListenable: moneyListNotifier,
+                  builder: (BuildContext ctx, List<moneymodel> walletList,
+                      Widget? child) {
+                    return ListView.builder(
+                      itemCount: walletList.length > 5 ? 5 : walletList.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        final data = walletList[index];
+                        return ListTile(
+                          title: Text(data.description,
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Text(
+                            '${data.time.year}-${data.time.day}-${data.time.month}',
+                            style: const TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                data.amount,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: data.type == 'income'
+                                      ? Colors.green[400]
+                                      : Color.fromRGBO(202, 15, 15, 1),
+                                ),
+                              ),
+                              const SizedBox(width: 2),
+                              const SizedBox(width: 2),
+                            ],
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
-          )
-        ]),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-    ));
+    );
   }
 
   Container recent({
@@ -171,47 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text(textA),
           subtitle: Text(textB),
           trailing: Text(textC),
-
-          // ListTile(
-          //   title: Text('hgfsd'),
-          //   subtitle: Text('sdf'),
-          //   trailing: Text('dfdf'),
-          // ),
-          // Divider(
-          //   thickness: 2,
-          // ),
-          // ListTile(
-          //   title: Text('hgfsd'),
-          //   subtitle: Text('sdf'),
-          //   trailing: Text('dfdf'),
-          // ),
-          // Divider(
-          //   thickness: 2,
-          // ),
-          // ListTile(
-          //   title: Text('hgfsd'),
-          //   subtitle: Text('sdf'),
-          //   trailing: Text('dfdf'),
-          // ),
-          // Divider(
-          //   thickness: 2,
-          // ),
-          // ListTile(
-          //   title: Text('hgfsd'),
-          //   subtitle: Text('sdf'),
-          //   trailing: Text('dfdf'),
-          // ),
-          // Divider(
-          //   thickness: 2,
-          // ),
-          // ListTile(
-          //   title: Text('hgfsd'),
-          //   subtitle: Text('sdf'),
-          //   trailing: Text('dfdf'),
-          // ),
-          // Divider(
-          //   thickness: 2,
-          // )
         ));
   }
 }

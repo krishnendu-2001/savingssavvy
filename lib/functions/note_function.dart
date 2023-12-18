@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
 import 'package:flutter_application_1/db/model/note/note_model.dart';
-import 'package:flutter_application_1/db/money_function.dart';
+import 'package:flutter_application_1/functions/money_function.dart';
 import 'package:hive/hive.dart';
 
 ValueNotifier<List<notemodel>> noteListNotifier = ValueNotifier([]);

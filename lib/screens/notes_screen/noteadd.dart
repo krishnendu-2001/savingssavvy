@@ -3,7 +3,9 @@ import 'package:flutter_application_1/functions/note_function.dart';
 import 'package:flutter_application_1/db/model/note/note_model.dart';
 
 class NotesAdd extends StatefulWidget {
-  const NotesAdd({Key? key}) : super(key: key);
+  final String? noteContent;
+
+  const NotesAdd({Key? key, this.noteContent}) : super(key: key);
 
   @override
   State<NotesAdd> createState() => _NotesAddState();
@@ -11,6 +13,13 @@ class NotesAdd extends StatefulWidget {
 
 class _NotesAddState extends State<NotesAdd> {
   TextEditingController _noteController = TextEditingController();
+  List<String> notes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _noteController.text = widget.noteContent ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +27,7 @@ class _NotesAddState extends State<NotesAdd> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context)
-                .pop(); // Use pop to go back without passing data
+            Navigator.of(context).pop();
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -28,7 +36,10 @@ class _NotesAddState extends State<NotesAdd> {
         children: [
           TextFormField(
             decoration: InputDecoration(
-                border: InputBorder.none, hintMaxLines: 1, hintText: 'Title'),
+              border: InputBorder.none,
+              hintMaxLines: 1,
+              hintText: 'Title',
+            ),
           ),
           Container(
             child: TextFormField(
@@ -45,7 +56,9 @@ class _NotesAddState extends State<NotesAdd> {
             child: TextFormField(
               controller: _noteController,
               decoration: InputDecoration(
-                  hintText: 'Start typing', border: InputBorder.none),
+                hintText: 'Start typing',
+                border: InputBorder.none,
+              ),
               maxLines: 6,
             ),
           ),
@@ -65,7 +78,11 @@ class _NotesAddState extends State<NotesAdd> {
     if (noteContent.isEmpty) {
       return;
     } else {
-      final note = notemodel(note: noteContent, date: DateTime.now());
+      final note = notemodel(
+        title: '',
+        date: DateTime.now(),
+        description: '',
+      );
       AddNotes(note);
       print('$noteContent');
       Navigator.of(context).pop(noteContent);

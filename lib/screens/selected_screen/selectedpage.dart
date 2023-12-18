@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/db/money_function.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
-import 'package:flutter_application_1/screens/transaction_screen/history_transaction.dart';
+import 'package:flutter_application_1/functions/money_function.dart';
 import 'package:flutter_application_1/widget/bottombar.dart';
 
 class AddScreen extends StatefulWidget {
@@ -38,6 +40,10 @@ class _AddScreenState extends State<AddScreen> {
                 ),
                 TextFormField(
                   controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly // Allow only digits
+                  ],
                   decoration: InputDecoration(
                     labelText: 'Amount',
                     border: OutlineInputBorder(),
@@ -56,11 +62,29 @@ class _AddScreenState extends State<AddScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  controller: _dateController,
-                  decoration: InputDecoration(
-                    labelText: 'Date',
-                    border: OutlineInputBorder(),
+                GestureDetector(
+                  onTap: () async {
+                    DateTime? selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2100),
+                    );
+
+                    if (selectedDate != null) {
+                      String formattedDate =
+                          "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+                      _dateController.text = formattedDate;
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: _dateController,
+                      decoration: InputDecoration(
+                        labelText: 'Date',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -136,9 +160,12 @@ class _AddScreenState extends State<AddScreen> {
     final typee = selectedType!;
     final amountt = _amountController.text.trim();
     final descriptionn = _descriptionController.text.trim();
-    final date = _dateController.text.trim();
+    final time = _dateController.text.trim();
 
-    if (typee.isEmpty || amountt.isEmpty || descriptionn.isEmpty) {
+    if (typee.isEmpty ||
+        amountt.isEmpty ||
+        descriptionn.isEmpty ||
+        time.isEmpty) {
       return;
     } else {
       final money = moneymodel(

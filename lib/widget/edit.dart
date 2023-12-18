@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
-import 'package:flutter_application_1/db/money_function.dart';
-import 'package:flutter_application_1/screens/transaction_screen/history_transaction.dart';
+import 'package:flutter_application_1/functions/money_function.dart';
 import 'package:flutter_application_1/widget/bottombar.dart';
 
 class EditData extends StatefulWidget {
@@ -36,9 +35,9 @@ class _EditDataState extends State<EditData> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 42, 120, 114),
+        backgroundColor: Color.fromARGB(255, 108, 120, 42),
         appBar: AppBar(
-          backgroundColor: Colors.teal,
+          backgroundColor: const Color.fromARGB(255, 135, 150, 0),
           title: Text('Edit Expense'),
         ),
         body: SingleChildScrollView(
