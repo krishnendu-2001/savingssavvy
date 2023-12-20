@@ -9,12 +9,9 @@ class notemodel {
   @HiveField(1)
   String title;
 
-  @HiveField(1)
-  DateTime date;
-
   @HiveField(2)
   String description;
 
   notemodel(
-      {required this.title, required this.date, required this.description});
+      {required this.title, required this.description, required String date});
 }

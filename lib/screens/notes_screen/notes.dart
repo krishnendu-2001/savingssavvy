@@ -26,7 +26,7 @@ class _NoteScreenState extends State<NoteScreen> {
             onPressed: () async {
               var result = await Navigator.of(context).push<String>(
                 MaterialPageRoute(
-                  builder: (context) => NotesAdd(),
+                  builder: (context) => const NotesAdd(),
                 ),
               );
 
@@ -36,7 +36,7 @@ class _NoteScreenState extends State<NoteScreen> {
                 });
               }
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -45,16 +45,16 @@ class _NoteScreenState extends State<NoteScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Text(
+            const Text(
               'Notes',
               style: TextStyle(fontSize: 30, color: Colors.white),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search notes...',
-                hintStyle: TextStyle(color: Colors.grey),
-                prefixIcon: Icon(
+                hintStyle: const TextStyle(color: Colors.grey),
+                prefixIcon: const Icon(
                   Icons.search,
                   color: Colors.black,
                 ),
@@ -62,11 +62,11 @@ class _NoteScreenState extends State<NoteScreen> {
                 filled: true,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Colors.transparent),
+                  borderSide: const BorderSide(color: Colors.transparent),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: GestureDetector(
                 child: ListView.builder(
@@ -75,30 +75,28 @@ class _NoteScreenState extends State<NoteScreen> {
                     return ListTile(
                       title: Text(
                         notes[index],
-                        maxLines: 2, // Set the maximum number of lines
+                        maxLines: 2,
                         overflow: TextOverflow
                             .ellipsis, // Display ellipsis (...) if the text overflows
                       ),
-                      // Assuming you want to display the current date for each note
                       subtitle: Text(
-                        '${DateTime.now().toString()}',
-                        maxLines: 2, // Set the maximum number of lines
-                        overflow: TextOverflow
-                            .ellipsis, // Display ellipsis (...) if the text overflows
+                        DateTime.now().toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       trailing: IconButton(
                         onPressed: () {
                           delete(index);
                         },
-                        icon: Icon(Icons.delete),
+                        icon: const Icon(Icons.delete),
                       ),
                     );
                   },
                 ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Detailpage(
-                            note: Detailpage,
+                      builder: (context) => const Detailpage(
+                            noteContent: "hhha",
                           )));
                 },
               ),

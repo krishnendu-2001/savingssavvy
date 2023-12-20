@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Detailpage extends StatefulWidget {
-  const Detailpage({super.key, required note});
+  final String noteContent;
+  const Detailpage({super.key, required this.noteContent});
 
   @override
   State<Detailpage> createState() => _DetailpageState();
@@ -26,20 +27,14 @@ class _DetailpageState extends State<Detailpage> {
       body: Column(
         children: [
           Text(
-            notes.toString(),
+            widget.noteContent,
             style: TextStyle(fontSize: sqrt1_2),
           ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: 'Title', border: InputBorder.none, hintMaxLines: 1),
-          ),
+          Text(widget.noteContent),
           // SizedBox(
           //   height: 10,
           // ),
-          Text(
-            '',
-            style: TextStyle(fontSize: 20),
-          ),
+
           TextFormField(
             decoration: InputDecoration(
                 hintText: 'Date', border: InputBorder.none, hintMaxLines: 1),

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
@@ -122,17 +124,15 @@ class _AddScreenState extends State<AddScreen> {
           }),
           items: item
               .map((e) => DropdownMenuItem(
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Text(
-                            e,
-                            style: const TextStyle(fontSize: 17),
-                          )
-                        ],
-                      ),
-                    ),
                     value: e,
+                    child: Row(
+                      children: [
+                        Text(
+                          e,
+                          style: const TextStyle(fontSize: 17),
+                        )
+                      ],
+                    ),
                   ))
               .toList(),
           selectedItemBuilder: (BuildContext context) => item

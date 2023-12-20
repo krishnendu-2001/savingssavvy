@@ -34,7 +34,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
           Container(
               width: 160,
               height: 35,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 236, 238, 240),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Row(
@@ -47,12 +47,12 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                         searchQuery = value;
                       });
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "search",
                       border: InputBorder.none,
                     ),
                   )),
-                  Icon(Icons.search)
+                  const Icon(Icons.search)
                 ],
               )),
           PopupMenuButton<String>(
@@ -60,13 +60,15 @@ class _TransactionHistoryState extends State<TransactionHistory> {
               if (value == 'option1') {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => IncomeScreen(history: IncomeScreen),
+                    builder: (context) =>
+                        const IncomeScreen(history: IncomeScreen),
                   ),
                 );
               } else if (value == 'option2') {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => ExpenceScreen(history: ExpenceScreen),
+                    builder: (context) =>
+                        const ExpenceScreen(history: ExpenceScreen),
                   ),
                 );
               }
@@ -86,9 +88,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
       ),
       body: ValueListenableBuilder(
         valueListenable: moneyListNotifier,
-        builder:
-            (BuildContext ctx, List<moneymodel> walletList, Widget? child) {
-          List<moneymodel> filteredList = walletList.where((data) {
+        builder: (BuildContext ctx, List<moneymodel> moneyList, Widget? child) {
+          List<moneymodel> filteredList = moneyList.where((data) {
             return data.description
                 .toLowerCase()
                 .contains(searchQuery.toLowerCase());
@@ -99,11 +100,11 @@ class _TransactionHistoryState extends State<TransactionHistory> {
               final data = filteredList[index];
               return Slidable(
                 endActionPane: ActionPane(
-                  motion: StretchMotion(),
+                  motion: const StretchMotion(),
                   children: [
                     InkWell(
                       onTap: () => delet(index),
-                      child: Icon(
+                      child: const Icon(
                         Icons.delete,
                         color: Colors.red,
                       ),
@@ -118,7 +119,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                           ),
                         ),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.edit,
                         color: Colors.green,
                       ),
@@ -141,7 +142,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                           fontWeight: FontWeight.w700,
                           color: data.type == 'income'
                               ? Colors.green[400]
-                              : Color.fromRGBO(202, 15, 15, 1),
+                              : const Color.fromRGBO(202, 15, 15, 1),
                         ),
                       ),
                       const SizedBox(

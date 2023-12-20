@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/functions/note_function.dart';
 import 'package:flutter_application_1/db/model/note/note_model.dart';
@@ -12,7 +14,9 @@ class NotesAdd extends StatefulWidget {
 }
 
 class _NotesAddState extends State<NotesAdd> {
-  TextEditingController _noteController = TextEditingController();
+  final _noteController = TextEditingController();
+  final descriptioncon = TextEditingController();
+  final datecontr = TextEditingController();
   List<String> notes = [];
 
   @override
@@ -29,33 +33,50 @@ class _NotesAddState extends State<NotesAdd> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: Column(
         children: [
           TextFormField(
-            decoration: InputDecoration(
+            controller: descriptioncon,
+            decoration: const InputDecoration(
               border: InputBorder.none,
               hintMaxLines: 1,
               hintText: 'Title',
             ),
           ),
-          Container(
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintMaxLines: 1,
-                hintText: 'date',
+          GestureDetector(
+            onTap: () async {
+              DateTime? selectedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1900),
+                lastDate: DateTime(2100),
+              );
+
+              if (selectedDate != null) {
+                String formattedDate =
+                    "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+                datecontr.text = formattedDate;
+              }
+            },
+            child: AbsorbPointer(
+              child: TextFormField(
+                controller: datecontr,
+                decoration: const InputDecoration(
+                  labelText: 'Date',
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: 500,
             height: 300,
             child: TextFormField(
               controller: _noteController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Start typing',
                 border: InputBorder.none,
               ),
@@ -66,7 +87,7 @@ class _NotesAddState extends State<NotesAdd> {
             onPressed: () {
               onAddButtonNotes();
             },
-            child: Text('Save'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -75,16 +96,16 @@ class _NotesAddState extends State<NotesAdd> {
 
   Future<void> onAddButtonNotes() async {
     final noteContent = _noteController.text.trim();
+    final notee = descriptioncon.text.trim.toString();
+    final datee = datecontr.text.trim();
     if (noteContent.isEmpty) {
       return;
     } else {
-      final note = notemodel(
-        title: '',
-        date: DateTime.now(),
-        description: '',
-      );
+      final note =
+          notemodel(title: notee, date: datee, description: noteContent);
       AddNotes(note);
-      print('$noteContent');
+      log(noteContent);
+
       Navigator.of(context).pop(noteContent);
     }
   }

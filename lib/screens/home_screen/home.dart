@@ -17,13 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // Get the list of transactions
-    List<moneymodel> walletList = moneyListNotifier.value;
+    List<moneymodel> moneyList = moneyListNotifier.value;
 
     // Calculate total income and total expense
     double totalIncome = 0.0;
     double totalExpense = 0.0;
 
-    walletList.forEach((transaction) {
+    moneyList.forEach((transaction) {
       if (transaction.type == 'income') {
         totalIncome += double.parse(transaction.amount);
       } else if (transaction.type == 'expense') {
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                     fontSize: 18, color: Color.fromRGBO(202, 15, 15, 1)),
               ),
-              SizedBox(height: 20), // Adjust spacing as needed
+              SizedBox(height: 20),
               Container(
                 height: 30,
                 width: 100,
@@ -98,12 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 500,
                 child: ValueListenableBuilder(
                   valueListenable: moneyListNotifier,
-                  builder: (BuildContext ctx, List<moneymodel> walletList,
+                  builder: (BuildContext ctx, List<moneymodel> moneyList,
                       Widget? child) {
                     return ListView.builder(
-                      itemCount: walletList.length > 5 ? 5 : walletList.length,
+                      itemCount: moneyList.length > 5 ? 5 : moneyList.length,
                       itemBuilder: (BuildContext ctx, int index) {
-                        final data = walletList[index];
+                        final data = moneyList[index];
                         return ListTile(
                           title: Text(data.description,
                               style: TextStyle(fontWeight: FontWeight.bold)),

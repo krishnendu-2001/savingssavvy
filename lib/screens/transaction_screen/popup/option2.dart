@@ -16,10 +16,10 @@ class ExpenceScreen extends StatelessWidget {
         body: ValueListenableBuilder(
           valueListenable: moneyListNotifier,
           builder:
-              (BuildContext ctx, List<moneymodel> walletList, Widget? child) {
+              (BuildContext ctx, List<moneymodel> moneyList, Widget? child) {
             // Filter expenses
             List<moneymodel> expenseList =
-                walletList.where((data) => data.type == 'expense').toList();
+                moneyList.where((data) => data.type == 'expense').toList();
 
             return ListView.builder(
               itemCount: expenseList.length,

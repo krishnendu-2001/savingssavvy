@@ -17,18 +17,20 @@ class notemodelAdapter extends TypeAdapter<notemodel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return notemodel(
-      title: fields[0] as String,
-      date: fields[1] as DateTime,
-      description: fields[2],
+      title: fields[1] as String,
+      date: fields[2],
+      description: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, notemodel obj) {
     writer
+      ..writeByte(2)
       ..writeByte(1)
-      ..writeByte(0)
-      ..write(obj.date);
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.description);
   }
 
   @override
