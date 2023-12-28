@@ -43,6 +43,7 @@ class IncomeScreen extends StatelessWidget {
                               description: data.description,
                               amount: data.amount,
                               index: index,
+                              type: data.type,
                             ),
                           ),
                         ),

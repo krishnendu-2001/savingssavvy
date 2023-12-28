@@ -40,6 +40,7 @@ class ExpenceScreen extends StatelessWidget {
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => EditData(
+                              type: data.type,
                               description: data.description,
                               amount: data.amount,
                               index: index,

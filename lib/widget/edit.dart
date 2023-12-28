@@ -7,10 +7,12 @@ import 'package:flutter_application_1/widget/bottombar.dart';
 class EditData extends StatefulWidget {
   final String description;
   final String amount;
+  final String type;
   final int index;
 
   EditData({
     Key? key,
+    required this.type,
     required this.description,
     required this.amount,
     required this.index,
@@ -21,15 +23,19 @@ class EditData extends StatefulWidget {
 }
 
 class _EditDataState extends State<EditData> {
+  TextEditingController typeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    typeController = TextEditingController(text: widget.type);
     descriptionController = TextEditingController(text: widget.description);
     amountController = TextEditingController(text: widget.amount);
   }
+
+  ///????
 
   @override
   Widget build(BuildContext context) {
@@ -54,26 +60,19 @@ class _EditDataState extends State<EditData> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: descriptionController,
-                          style: TextStyle(color: Colors.black),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Edit your expense',
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
+                      child: TextFormField(
+                        controller: typeController,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Edit your type',
+                          hintStyle: TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       height: 80,
                       width: 320,
@@ -81,46 +80,86 @@ class _EditDataState extends State<EditData> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: amountController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.black),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Edit amount',
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
+                      child: TextFormField(
+                        controller: amountController,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Edit your expense',
+                          hintStyle: TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          update();
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                      child: const Text(
-                        "Done",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    )
                   ],
                 ),
               ),
+              Container(
+                height: 80,
+                width: 320,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    controller: descriptionController,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'description',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 80,
+                width: 320,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    controller: descriptionController,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'description',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    update();
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                ),
+                child: const Text(
+                  "Done",
+                  style: TextStyle(color: Colors.black),
+                ),
+              )
             ],
           ),
         ),
@@ -131,15 +170,18 @@ class _EditDataState extends State<EditData> {
   Future<void> update() async {
     final editedDescription = descriptionController.text.trim();
     final editedAmount = amountController.text.trim();
+    final editedtype = typeController.text.trim();
 
-    if (editedDescription.isEmpty || editedAmount.isEmpty) {
+    if (editedDescription.isEmpty ||
+        editedAmount.isEmpty ||
+        editedtype.isEmpty) {
       return;
     } else {
       final updated = moneymodel(
         description: editedDescription,
         amount: editedAmount,
         time: DateTime.now(),
-        type: '',
+        type: editedtype,
         typee: '',
       );
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -148,9 +190,9 @@ class _EditDataState extends State<EditData> {
         behavior: SnackBarBehavior.floating,
         content: Text("Updated successfully"),
       ));
-      editMoney(updated);
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => BottomNavigation()));
+      editMoney(widget.index, updated);
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavigation()));
     }
   }
 }

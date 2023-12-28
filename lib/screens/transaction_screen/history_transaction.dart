@@ -116,6 +116,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                             description: data.description,
                             amount: data.amount,
                             index: index,
+                            type: data.type,
                           ),
                         ),
                       ),

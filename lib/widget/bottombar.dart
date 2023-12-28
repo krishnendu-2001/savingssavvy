@@ -18,10 +18,10 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _bottomNavIndex = 0;
   final _pages = [
-    HomeScreen(),
-    TransactionHistory(), // Use HistoryScreen instead of HistoryScreenState
+    const HomeScreen(),
+    const TransactionHistory(), // Use HistoryScreen instead of HistoryScreenState
     NoteScreen(),
-    Settings(),
+    const Settings(),
   ];
 
   @override
@@ -30,22 +30,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
       body: _pages[_bottomNavIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => (_bottomNavIndex == 0 ||
                     _bottomNavIndex == 1 ||
-                    _bottomNavIndex == 2)
-                ? AddScreen()
-                : NotesAdd(),
+                    _bottomNavIndex == 3)
+                ? const AddScreen()
+                : const NotesAdd(),
           ));
         },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        backgroundColor: Color.fromARGB(255, 109, 194, 185),
-        icons: [
+        backgroundColor: const Color.fromARGB(255, 109, 194, 185),
+        icons: const [
           Icons.home,
           Icons.history,
           Icons.note,

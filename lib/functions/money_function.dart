@@ -24,9 +24,11 @@ Future<void> delet(int index) async {
   getAllMoney();
 }
 
-Future<void> editMoney(moneymodel value) async {
+Future<void> editMoney(index, moneymodel value) async {
   final moneyDB = await Hive.openBox<moneymodel>('money_db');
-  moneyDB.put(value.id, value);
+  moneyListNotifier.value.clear();
+  moneyListNotifier.value.addAll(moneyDB.values);
   moneyListNotifier.notifyListeners();
+  moneyDB.putAt(index, value);
   getAllMoney();
 }
