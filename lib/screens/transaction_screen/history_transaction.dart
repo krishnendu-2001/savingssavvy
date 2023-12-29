@@ -103,7 +103,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                   motion: const StretchMotion(),
                   children: [
                     InkWell(
-                      onTap: () => delet(index),
+                      onTap: () => showDeleteConfirmationDialog(context, index),
                       child: const Icon(
                         Icons.delete,
                         color: Colors.red,
@@ -158,6 +158,33 @@ class _TransactionHistoryState extends State<TransactionHistory> {
           );
         },
       ),
+    );
+  }
+
+  void showDeleteConfirmationDialog(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Delete Confirmation"),
+          content: const Text("Are you sure you want to delete this chapter?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                await delet(index);
+                Navigator.of(context).pop();
+              },
+              child: const Text("Delete"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

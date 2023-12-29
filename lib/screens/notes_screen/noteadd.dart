@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/functions/note_function.dart';
 import 'package:flutter_application_1/db/model/note/note_model.dart';
@@ -41,11 +40,12 @@ class _NotesAddState extends State<NotesAdd> {
           TextFormField(
             controller: descriptioncon,
             decoration: const InputDecoration(
-              border: InputBorder.none,
+              border: OutlineInputBorder(),
               hintMaxLines: 1,
               hintText: 'Title',
             ),
           ),
+          const SizedBox(height: 5),
           GestureDetector(
             onTap: () async {
               DateTime? selectedDate = await showDatePicker(
@@ -71,6 +71,9 @@ class _NotesAddState extends State<NotesAdd> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           SizedBox(
             width: 500,
             height: 300,
@@ -78,7 +81,7 @@ class _NotesAddState extends State<NotesAdd> {
               controller: _noteController,
               decoration: const InputDecoration(
                 hintText: 'Start typing',
-                border: InputBorder.none,
+                border: OutlineInputBorder(),
               ),
               maxLines: 6,
             ),

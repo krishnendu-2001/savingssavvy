@@ -19,8 +19,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _bottomNavIndex = 0;
   final _pages = [
     const HomeScreen(),
-    const TransactionHistory(), // Use HistoryScreen instead of HistoryScreenState
-    NoteScreen(),
+    const TransactionHistory(),
+    const NoteScreen(),
     const Settings(),
   ];
 

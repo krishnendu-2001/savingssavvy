@@ -16,10 +16,10 @@ class _DetailpageState extends State<Detailpage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(title: Text('Details'), actions: [
+      appBar: AppBar(title: const Text('Details'), actions: [
         IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.edit_document,
               color: Colors.amber,
             ))
@@ -28,7 +28,7 @@ class _DetailpageState extends State<Detailpage> {
         children: [
           Text(
             widget.noteContent,
-            style: TextStyle(fontSize: sqrt1_2),
+            style: const TextStyle(fontSize: sqrt1_2),
           ),
           Text(widget.noteContent),
           // SizedBox(
@@ -36,19 +36,19 @@ class _DetailpageState extends State<Detailpage> {
           // ),
 
           TextFormField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 hintText: 'Date', border: InputBorder.none, hintMaxLines: 1),
           ),
           // SizedBox(
           //   height: 10,
           // ),
-          Text(
+          const Text(
             '',
             style: TextStyle(fontSize: 20),
           ),
           TextFormField(
-            decoration:
-                InputDecoration(border: InputBorder.none, hintText: 'Text'),
+            decoration: const InputDecoration(
+                border: InputBorder.none, hintText: 'Text'),
           )
         ],
       ),

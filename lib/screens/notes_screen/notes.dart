@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/db/model/note/note_model.dart';
 import 'package:flutter_application_1/functions/note_function.dart';
 import 'package:flutter_application_1/screens/detailpage.dart';
 
@@ -12,11 +13,10 @@ class NoteScreen extends StatefulWidget {
 }
 
 class _NoteScreenState extends State<NoteScreen> {
-  List<String> notes = [];
+  ValueNotifier<List<notemodel>> notelist = noteListNotifier;
 
   @override
   Widget build(BuildContext context) {
-    // Assuming getAllnotes() retrieves notes and updates the notes list
     getAllnotes();
 
     return Scaffold(
@@ -32,7 +32,7 @@ class _NoteScreenState extends State<NoteScreen> {
 
               if (result != null) {
                 setState(() {
-                  notes.add(result);
+                  getAllnotes(); // Refresh the list after adding a new note
                 });
               }
             },
@@ -40,7 +40,7 @@ class _NoteScreenState extends State<NoteScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey,
+      backgroundColor: Color.fromARGB(255, 164, 250, 167),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -70,11 +70,11 @@ class _NoteScreenState extends State<NoteScreen> {
             Expanded(
               child: GestureDetector(
                 child: ListView.builder(
-                  itemCount: notes.length,
+                  itemCount: notelist.value.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        notes[index],
+                        notelist.value[index].title,
                         maxLines: 2,
                         overflow: TextOverflow
                             .ellipsis, // Display ellipsis (...) if the text overflows
