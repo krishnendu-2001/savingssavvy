@@ -10,7 +10,7 @@ class EditData extends StatefulWidget {
   final String type;
   final int index;
 
-  EditData({
+  const EditData({
     Key? key,
     required this.type,
     required this.description,
@@ -41,10 +41,10 @@ class _EditDataState extends State<EditData> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 108, 120, 42),
+        backgroundColor: const Color.fromARGB(255, 108, 120, 42),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 135, 150, 0),
-          title: Text('Edit Expense'),
+          title: const Text('Edit Expense'),
         ),
         body: SingleChildScrollView(
           child: Column(

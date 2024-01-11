@@ -5,13 +5,21 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'note_model.g.dart';
 
 @HiveType(typeId: 1)
-class notemodel {
+class NoteModel {
+  @HiveField(0)
+  String? title;
+
   @HiveField(1)
-  String title;
+  String? date;
 
   @HiveField(2)
-  String description;
+  String? description;
 
-  notemodel(
-      {required this.title, required this.description, required String date});
+  NoteModel({
+    required this.title,
+    required this.description,
+    required this.date,
+  });
+
+  get time => null;
 }

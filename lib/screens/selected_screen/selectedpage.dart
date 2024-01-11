@@ -16,6 +16,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
@@ -26,79 +27,94 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: 350,
-            color: Color.fromARGB(108, 243, 235, 211),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                type(),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _amountController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly // Allow only digits
-                  ],
-                  decoration: InputDecoration(
-                    labelText: 'Amount',
-                    border: OutlineInputBorder(),
+        body: Form(
+          key: _formKey,
+          child: Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: 350,
+              color: Color.fromARGB(108, 243, 235, 211),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    border: OutlineInputBorder(),
+                  type(),
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    DateTime? selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2100),
-                    );
+                  TextFormField(
+                    controller: _amountController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    decoration: InputDecoration(
+                      labelText: 'Amount',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "please enter the amount";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Description',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "d";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      DateTime? selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                      );
 
-                    if (selectedDate != null) {
-                      String formattedDate =
-                          "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
-                      _dateController.text = formattedDate;
-                    }
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: _dateController,
-                      decoration: InputDecoration(
-                        labelText: 'Date',
-                        border: OutlineInputBorder(),
+                      if (selectedDate != null) {
+                        String formattedDate =
+                            "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+                        _dateController.text = formattedDate;
+                      }
+                    },
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: _dateController,
+                        decoration: InputDecoration(
+                          labelText: 'Date',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextButton(
-                  onPressed: () {
-                    onAddButtonClick();
-                  },
-                  child: Text("Save"),
-                ),
-              ],
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      onAddButtonClick();
+                    },
+                    child: Text("Save"),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -157,34 +173,36 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Future<void> onAddButtonClick() async {
-    final typee = selectedType!;
-    final amountt = _amountController.text.trim();
-    final descriptionn = _descriptionController.text.trim();
-    final time = _dateController.text.trim();
+    if (_formKey.currentState!.validate()) {
+      final typee = selectedType!;
+      final amountt = _amountController.text.trim();
+      final descriptionn = _descriptionController.text.trim();
+      final time = _dateController.text.trim();
 
-    if (typee.isEmpty ||
-        amountt.isEmpty ||
-        descriptionn.isEmpty ||
-        time.isEmpty) {
-      return;
-    } else {
-      final money = moneymodel(
-        type: typee,
-        amount: amountt,
-        description: descriptionn,
-        time: DateTime.now(),
-        typee: null,
-      );
-      AddAmount(money);
+      if (typee.isEmpty ||
+          amountt.isEmpty ||
+          descriptionn.isEmpty ||
+          time.isEmpty) {
+        return;
+      } else {
+        final money = moneymodel(
+          type: typee,
+          amount: amountt,
+          description: descriptionn,
+          time: DateTime.now(),
+          typee: null,
+        );
+        AddAmount(money);
 
-      print("$typee, $_dateController");
+        print("$typee, $_dateController");
 
-      // Navigator to HistoryScreen
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => BottomNavigation(),
-        ),
-      );
+        // Navigator to HistoryScreen
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BottomNavigation(),
+          ),
+        );
+      }
     }
   }
 }

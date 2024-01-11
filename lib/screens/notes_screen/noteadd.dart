@@ -83,7 +83,7 @@ class _NotesAddState extends State<NotesAdd> {
                 hintText: 'Start typing',
                 border: OutlineInputBorder(),
               ),
-              maxLines: 6,
+              maxLines: 5,
             ),
           ),
           TextButton(
@@ -105,7 +105,7 @@ class _NotesAddState extends State<NotesAdd> {
       return;
     } else {
       final note =
-          notemodel(title: notee, date: datee, description: noteContent);
+          NoteModel(title: notee, date: datee, description: noteContent);
       AddNotes(note);
       log(noteContent);
 

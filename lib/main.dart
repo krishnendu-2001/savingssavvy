@@ -12,8 +12,8 @@ void main() async {
     Hive.registerAdapter(moneymodelAdapter());
   }
 
-  if (!Hive.isAdapterRegistered(notemodelAdapter().typeId)) {
-    Hive.registerAdapter(notemodelAdapter());
+  if (!Hive.isAdapterRegistered(NoteModelAdapter().typeId)) {
+    Hive.registerAdapter(NoteModelAdapter());
   }
 
   runApp(const MyApp());

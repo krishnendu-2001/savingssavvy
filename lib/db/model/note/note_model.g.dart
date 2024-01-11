@@ -6,29 +6,31 @@ part of 'note_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class notemodelAdapter extends TypeAdapter<notemodel> {
+class NoteModelAdapter extends TypeAdapter<NoteModel> {
   @override
   final int typeId = 1;
 
   @override
-  notemodel read(BinaryReader reader) {
+  NoteModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return notemodel(
-      title: fields[1] as String,
-      date: fields[2],
-      description: fields[3] as String,
+    return NoteModel(
+      title: fields[0] as String?,
+      description: fields[2] as String?,
+      date: fields[1] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, notemodel obj) {
+  void write(BinaryWriter writer, NoteModel obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(1)
+      ..writeByte(3)
+      ..writeByte(0)
       ..write(obj.title)
+      ..writeByte(1)
+      ..write(obj.date)
       ..writeByte(2)
       ..write(obj.description);
   }
@@ -39,7 +41,7 @@ class notemodelAdapter extends TypeAdapter<notemodel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is notemodelAdapter &&
+      other is NoteModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

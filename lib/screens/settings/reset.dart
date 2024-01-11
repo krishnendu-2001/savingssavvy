@@ -46,13 +46,13 @@ Future<void> resetDB(
   );
 
   if (confirmReset == true) {
-    final Money_db = await Hive.openBox<moneymodel>('Money_db');
-    Money_db.clear();
+    final moneyDb = await Hive.openBox<moneymodel>('Money_db');
+    moneyDb.clear();
 
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => BottomNavigation(),
+          builder: (context) => const BottomNavigation(),
         ));
   }
 }
