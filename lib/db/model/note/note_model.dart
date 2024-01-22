@@ -16,7 +16,6 @@ class NoteModel {
   String? description;
 
   NoteModel({
-    required this.title,
     required this.description,
     required this.date,
   });

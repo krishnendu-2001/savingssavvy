@@ -20,7 +20,7 @@ class moneymodel {
       required this.amount,
       required this.description,
       required this.time,
-      required typee});
+      e});
 
   get id => null;
 }

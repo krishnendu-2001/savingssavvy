@@ -15,7 +15,7 @@ class Settings extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
-          backgroundColor: Color.fromARGB(255, 255, 162, 22),
+          backgroundColor: Colors.purple[50],
           title: const Center(
             child: Text(
               'Settings',

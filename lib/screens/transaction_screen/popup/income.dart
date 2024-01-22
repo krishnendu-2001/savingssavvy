@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
 import 'package:flutter_application_1/functions/money_function.dart';
-import 'package:flutter_application_1/widget/edit.dart';
+import 'package:flutter_application_1/widget/money_edit.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class IncomeScreen extends StatelessWidget {
@@ -27,11 +27,11 @@ class IncomeScreen extends StatelessWidget {
                 final data = expenseList[index];
                 return Slidable(
                   endActionPane: ActionPane(
-                    motion: StretchMotion(),
+                    motion: const StretchMotion(),
                     children: [
                       InkWell(
                         onTap: () => delet(index),
-                        child: Icon(
+                        child: const Icon(
                           Icons.delete,
                           color: Colors.red,
                         ),
@@ -47,7 +47,7 @@ class IncomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.edit,
                           color: Colors.green,
                         ),

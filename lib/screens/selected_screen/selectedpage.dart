@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
@@ -17,9 +15,9 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _amountController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _dateController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   String? selectedType;
   List<String> item = ['income', 'expense'];
 
@@ -31,8 +29,8 @@ class _AddScreenState extends State<AddScreen> {
           key: _formKey,
           child: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: 350,
+              // height: MediaQuery.of(context).size.height,
+              width: 200,
               color: Color.fromARGB(108, 243, 235, 211),
               child: Column(
                 children: [
@@ -71,7 +69,7 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "d";
+                        return "please enter the description";
                       }
                       return null;
                     },
@@ -124,20 +122,20 @@ class _AddScreenState extends State<AddScreen> {
 
   Padding type() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(width: 2, color: Colors.black54),
         ),
-        child: DropdownButton<String>(
+        child: DropdownButtonFormField<String>(
           value: selectedType,
-          onChanged: ((value) {
+          onChanged: (value) {
             setState(() {
               selectedType = value!;
             });
-          }),
+          },
           items: item
               .map((e) => DropdownMenuItem(
                     value: e,
@@ -151,22 +149,11 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ))
               .toList(),
-          selectedItemBuilder: (BuildContext context) => item
-              .map((e) => Row(
-                    children: [
-                      Text(e),
-                    ],
-                  ))
-              .toList(),
-          hint: const Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: Text(
-              "type",
-              style: TextStyle(color: Colors.grey),
-            ),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Type',
+            hintStyle: TextStyle(color: Colors.grey),
           ),
-          dropdownColor: Colors.white,
-          isExpanded: true,
         ),
       ),
     );
@@ -190,7 +177,6 @@ class _AddScreenState extends State<AddScreen> {
           amount: amountt,
           description: descriptionn,
           time: DateTime.now(),
-          typee: null,
         );
         AddAmount(money);
 

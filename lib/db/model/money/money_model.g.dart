@@ -21,7 +21,6 @@ class moneymodelAdapter extends TypeAdapter<moneymodel> {
       amount: fields[1] as String,
       description: fields[2] as String,
       time: fields[3] as DateTime,
-      typee: null,
     );
   }
 

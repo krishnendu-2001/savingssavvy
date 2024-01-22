@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_application_1/screens/selected_screen/selectedpage.dart';
 
 import 'package:flutter_application_1/screens/home_screen/home.dart';
@@ -29,7 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       body: _pages[_bottomNavIndex],
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         shape: const CircleBorder(),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -40,11 +41,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 : const NotesAdd(),
           ));
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 109, 194, 185),
+        backgroundColor: Colors.white,
         icons: const [
           Icons.home,
           Icons.history,
@@ -64,7 +65,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           });
         },
         activeColor: Colors.white,
-        inactiveColor: Colors.white,
+        inactiveColor: Colors.black,
       ),
     );
   }

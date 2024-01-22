@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/functions/money_function.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
@@ -25,58 +26,73 @@ class _HomeScreenState extends State<HomeScreen> {
         totalExpense += double.parse(transaction.amount);
       }
     }
-
+    getAllMoney();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const ListTile(
-                title: Text(
-                  'Hey! Krishnendu',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                width: double.infinity,
+                height: 300,
+                child: ContainedTabBarView(
+                  tabs: const [
+                    Text('Total'),
+                    Text('Chart'),
+                  ],
+                  views: [
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Income: ${totalIncome.toStringAsFixed(2)}',
+                            style: TextStyle(
+                                fontSize: 18, color: Colors.green[400]),
+                          ),
+                          Text(
+                            'Total Expense: ${totalExpense.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                                fontSize: 18,
+                                color: Color.fromRGBO(202, 15, 15, 1)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 300,
+                      width: 300,
+                      child: Stack(
+                        children: [
+                          PieChart(
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 0),
+                            swapAnimationCurve: Curves.bounceIn,
+                            PieChartData(
+                              sections: [
+                                PieChartSectionData(
+                                  value: totalIncome,
+                                  title: "Income",
+                                  color: const Color.fromRGBO(118, 150, 129, 1),
+                                ),
+                                PieChartSectionData(
+                                  value: totalExpense,
+                                  title: "Expenses",
+                                  color: const Color.fromRGBO(224, 123, 155, 1),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  onChange: (index) => print(index),
                 ),
               ),
               const SizedBox(height: 0),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: SizedBox(
-                  height: 300,
-                  child: Stack(
-                    children: [
-                      PieChart(
-                        swapAnimationDuration: const Duration(milliseconds: 0),
-                        swapAnimationCurve: Curves.bounceIn,
-                        PieChartData(
-                          sections: [
-                            PieChartSectionData(
-                              value: totalIncome,
-                              title: "Income",
-                              color: const Color.fromRGBO(118, 150, 129, 1),
-                            ),
-                            PieChartSectionData(
-                              value: totalExpense,
-                              title: "Expenses",
-                              color: const Color.fromRGBO(224, 123, 155, 1),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Total Income: ${totalIncome.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 18, color: Colors.green[400]),
-              ),
-              Text(
-                'Total Expense: ${totalExpense.toStringAsFixed(2)}',
-                style: const TextStyle(
-                    fontSize: 18, color: Color.fromRGBO(202, 15, 15, 1)),
-              ),
               const SizedBox(height: 20),
               Container(
                 height: 30,

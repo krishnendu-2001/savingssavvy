@@ -8,7 +8,7 @@ class TermsCondition extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 109, 194, 185),
+            backgroundColor: Colors.purple[50],
             title: const Center(
               child: Text(
                 "Terms & Conditions",

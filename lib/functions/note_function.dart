@@ -27,11 +27,11 @@ Future<void> delete(int index) async {
   getAllnotes();
 }
 
-void editNotes(index, moneymodel value) async {
+void editNotes(index, NoteModel value) async {
   final notesDB = await Hive.openBox<NoteModel>('noteDB_db');
   noteListNotifier.value.clear();
   noteListNotifier.value.addAll(notesDB.values as Iterable<NoteModel>);
   noteListNotifier.notifyListeners();
   notesDB.putAt(index, value as NoteModel);
-  getAllMoney();
+  getAllnotes();
 }

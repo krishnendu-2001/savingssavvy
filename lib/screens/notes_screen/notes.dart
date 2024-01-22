@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/db/model/note/note_model.dart';
 import 'package:flutter_application_1/functions/note_function.dart';
 import 'package:flutter_application_1/screens/notes_screen/noteadd.dart';
+import 'package:flutter_application_1/widget/note_edit.dart';
 
 class NoteScreen extends StatefulWidget {
   const NoteScreen({Key? key}) : super(key: key);
@@ -23,19 +24,17 @@ class _NoteScreenState extends State<NoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.purple[50],
         title: const Text(
           'Notes',
           style: TextStyle(
             fontSize: 25,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
           ),
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              var result = await Navigator.of(context).push<String>(
+            onPressed: () {
+              Navigator.of(context).push<String>(
                 MaterialPageRoute(builder: (context) => const NotesAdd()),
               );
               // if (result != null) {
@@ -74,7 +73,15 @@ class _NoteScreenState extends State<NoteScreen> {
                       ),
                       const SizedBox(width: 16),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditNotesData(
+                              date: notess.date.toString(),
+                              index: index,
+                              noteContent: notess.description.toString(),
+                            ),
+                          ));
+                        },
                         icon: const Icon(Icons.edit),
                       ),
                     ],

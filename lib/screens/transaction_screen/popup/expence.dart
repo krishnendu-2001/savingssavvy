@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
 import 'package:flutter_application_1/functions/money_function.dart';
-import 'package:flutter_application_1/widget/edit.dart';
+import 'package:flutter_application_1/widget/money_edit.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ExpenceScreen extends StatelessWidget {

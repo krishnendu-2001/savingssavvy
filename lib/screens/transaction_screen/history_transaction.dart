@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/functions/money_function.dart';
 import 'package:flutter_application_1/db/model/money/money_model.dart';
-import 'package:flutter_application_1/widget/edit.dart';
-import 'package:flutter_application_1/screens/transaction_screen/popup/option2.dart';
-import 'package:flutter_application_1/screens/transaction_screen/popup/options.dart';
+import 'package:flutter_application_1/widget/money_edit.dart';
+import 'package:flutter_application_1/screens/transaction_screen/popup/expence.dart';
+import 'package:flutter_application_1/screens/transaction_screen/popup/income.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TransactionHistory extends StatefulWidget {
@@ -20,22 +20,21 @@ class _TransactionHistoryState extends State<TransactionHistory> {
     getAllMoney();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.purple[50],
         elevation: 0,
         title: const Text(
           'History',
           style: TextStyle(
             fontSize: 25,
             color: Colors.black,
-            fontWeight: FontWeight.bold,
           ),
         ),
         actions: [
           Container(
-              width: 160,
+              width: 170,
               height: 35,
               decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 236, 238, 240),
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

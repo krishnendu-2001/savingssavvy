@@ -7,7 +7,7 @@ class About extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.purple[50],
           appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 109, 194, 185),
             title: Text(

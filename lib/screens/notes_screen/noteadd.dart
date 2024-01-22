@@ -37,14 +37,6 @@ class _NotesAddState extends State<NotesAdd> {
       ),
       body: Column(
         children: [
-          TextFormField(
-            controller: descriptioncon,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintMaxLines: 1,
-              hintText: 'Title',
-            ),
-          ),
           const SizedBox(height: 5),
           GestureDetector(
             onTap: () async {
@@ -99,13 +91,11 @@ class _NotesAddState extends State<NotesAdd> {
 
   Future<void> onAddButtonNotes() async {
     final noteContent = _noteController.text.trim();
-    final notee = descriptioncon.text.trim.toString();
     final datee = datecontr.text.trim();
     if (noteContent.isEmpty) {
       return;
     } else {
-      final note =
-          NoteModel(title: notee, date: datee, description: noteContent);
+      final note = NoteModel(date: datee, description: noteContent);
       AddNotes(note);
       log(noteContent);
 
